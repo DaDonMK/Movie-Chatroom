@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import {connect} from 'react-redux'
 import {loginUser, logoutUser} from './../ducks/loggedInReducer'
@@ -6,16 +6,36 @@ import {getName} from './../ducks/fullNameReducer'
 
 // import './Join.css';
 
-export default function ChatHome() {
+function ChatHome(props) {
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
+
+    // useEffect(() => {
+    //     setName(props.giveMeName.name)
+    // }, [name])
+    useEffect(() => {
+            
+        let redux = props.giveMeName.name
+        redux = redux.replace(/\s/g, '')
+        console.log(redux)
+        setName(redux)
+
+
+    },[])
+
+    // function nameInput(inp){
+
+
+    //     setName(inp)
+    // }
+
 
   return (
     <div className="joinOuterContainer">
       <div className="joinInnerContainer">
         <h1 className="heading">Join</h1>
         <div>
-          <input placeholder="Name" className="joinInput" type="text" onChange={(event) => setName(event.target.value)} />
+          {/* <input placeholder="Name" className="joinInput" type="text" onChange={(event) => nameInput(event.target.value)} /> */}
         </div>
         <div>
           <input placeholder="Room" className="joinInput mt-20" type="text" onChange={(event) => setRoom(event.target.value)} />
@@ -29,6 +49,15 @@ export default function ChatHome() {
 }
 
 
+function mapStateToProps(state) {
+
+    return({ 
+      logg: state.logg,
+      giveMeName: state.giveMeName
+    })
+  }
+
+export default connect(mapStateToProps, { loginUser, logoutUser, getName })(ChatHome)
 
 
 

@@ -71,6 +71,9 @@ const Header = (props) => {
             <Link className='links' to='/'>
             <button className='logout-button' onClick={logout}>LogOut</button>
              </Link>
+             <Link className='links' to='/chatHome'>
+             Chatroom
+             </Link>
 
             </div>
         }

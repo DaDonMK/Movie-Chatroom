@@ -7,6 +7,9 @@ import InfoBar from './InfoBar'
 import ScrollToBottom from 'react-scroll-to-bottom'
 import Input from './Input'
 import Messages from './Messages'
+import {connect} from 'react-redux'
+import {loginUser, logoutUser} from './../ducks/loggedInReducer'
+import {getName} from './../ducks/fullNameReducer'
 
 const ChatRoom = ({location}) => {
     
@@ -29,42 +32,23 @@ const ChatRoom = ({location}) => {
     socket = io('ws://localhost:4002')
     useEffect(() => {
         // socket = io('ws://localhost:4002')
-        let id = 1
-        const {name, room} = queryString.parse(location.search)
+        let { name, room} = queryString.parse(location.search)
 
-        // const data = async () => {
-            
-        //     let res = await axios.get('auth/getUserData')
-        //     console.log('x data: ' + res.data.x.first_name + res.data.x.last_name + res.data.id)
-            
-        //     id = res.data.id
-        //     console.log('id ' +  id)
 
+            setName(name)
+            setRoom(room)
+            console.log(name)
+            //     console.log('id ' +  id)
+            
+            socket.emit('join', { name, room }, (error) => {
+                if(error) {
+                  alert(error);
+                }
+              });
 
         //     socket.emit('join', {id, name, room})
             
         // }
-        
-        // data()
-        setRoom(room);
-        setName(name)
-
-        // console.log('id2 ' +  id)
-
-    
-        // return () => {
-        //     socket.emit('disconnet')
-
-        //     socket.off()
-        // }
-
-        // setid2(id2 + 1)
-
-        socket.emit('join', { name, room }, (error) => {
-            if(error) {
-              alert(error);
-            }
-          });
 
     }, [ENDPOINT, location.search])
 
@@ -92,34 +76,7 @@ const ChatRoom = ({location}) => {
     }
 
     console.log( messages)
-    // console.log( message)
-
-
-    // let z = []
-
-
-    // if(messages.length === 1){
-
-    //     messages.map((element, i) => {
-    //         console.log(`welcome to ${room}, ${name}`)
-    //         z.push(`welcome to ${room}, ${name}`)
-    //         // return element
-    //     })
-        
-//    if(messages.length > 1){
-
-//         messages.map((element, i) => {
-
-//             if(i === 0){
-//                 console.log(`Welcome to ${room}, ${name}`)    
-
-//             }else{
-//                 console.log(element[0].user + ' says ' + element[0].text + i)
-//                 z.push({'name': element[0].user, 'text': element[0].text})
-
-//             }
-//         })
-//     }
+    
 
     return(
 
@@ -133,40 +90,18 @@ const ChatRoom = ({location}) => {
     </div>
     )
         
-        // <div className='outerContainer'>
-
-            
-
-        //     <div className='container'>
-        //         <InfoBar room={room} />
-        //         <Messages z={z} name={name}/>
-        //         <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>
+    }
 
 
+function mapStateToProps(state) {
+
+    return({ 
+      logg: state.logg,
+      giveMeName: state.giveMeName
+    })
+  }
+
+export default connect(mapStateToProps, { loginUser, logoutUser, getName })(ChatRoom)
 
 
-
-
-                /* {z.map((e,i) => {
-
-                    if(i === 0){
-                        return ''
-                    }
-
-                    return <div key={i}>
-                        <ScrollToBottom>
-                         {e}
-                        </ScrollToBottom>
-                    </div>
-                })} */
-
-               
-
-    //         </div>
-    //     </div>
-        
-    // )
-
-}
-
-export default ChatRoom
+// export default ChatRoom

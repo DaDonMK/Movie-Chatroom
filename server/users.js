@@ -69,7 +69,10 @@ if(callback){
 const addUser =  ({id2, id, name, room}) => {
 
     name = name.trim().toLowerCase();
+    // name = name.replace(/^\s+/, '')
     room = room.trim().toLowerCase();
+
+    console.log(name)
 
     const existingUser = users.find((user) => user.room === room && user.name === name);
 
