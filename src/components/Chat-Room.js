@@ -10,18 +10,13 @@ import Messages from './Messages'
 import {connect} from 'react-redux'
 import {loginUser, logoutUser} from './../ducks/loggedInReducer'
 import {getName} from './../ducks/fullNameReducer'
+import TextContainer from './TextContainer'
 
 const ChatRoom = ({location}) => {
-    
-    // const {name, room} = queryString.parse(location.search)
-    // const [room, setRoom] = useState('')
-    // const [name, setName] = useState('')
-    // const [message, setMessage] = useState('') 
-    // const [messages, setMessages] = useState([]) 
+     
     const [name, setName] = useState('');
     const [room, setRoom] = useState('');
     const [users, setUsers] = useState('');
-    // const [id2, setid2] = useState(0)
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     
@@ -31,24 +26,19 @@ const ChatRoom = ({location}) => {
     
     socket = io('ws://localhost:4002')
     useEffect(() => {
-        // socket = io('ws://localhost:4002')
         let { name, room} = queryString.parse(location.search)
 
 
-            setName(name)
-            setRoom(room)
+        setName(name)
+        setRoom(room)
             console.log(name)
-            //     console.log('id ' +  id)
             
-            socket.emit('join', { name, room }, (error) => {
-                if(error) {
-                  alert(error);
+        socket.emit('join', { name, room }, (error) => {
+            if(error) {
+            alert(error);
                 }
-              });
+        });
 
-        //     socket.emit('join', {id, name, room})
-            
-        // }
 
     }, [ENDPOINT, location.search])
 
@@ -86,7 +76,7 @@ const ChatRoom = ({location}) => {
           <Messages messages={messages} name={name} />
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
-      {/* <TextContainer users={users}/> */}
+      <TextContainer users={users}/>
     </div>
     )
         
@@ -104,4 +94,3 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, { loginUser, logoutUser, getName })(ChatRoom)
 
 
-// export default ChatRoom
