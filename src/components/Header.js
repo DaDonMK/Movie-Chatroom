@@ -37,7 +37,7 @@ const Header = (props) => {
 
             }
         }).catch(err=>{
-            console.log('error in HELLO')
+            console.log(err)
             setname('no')
            
         })

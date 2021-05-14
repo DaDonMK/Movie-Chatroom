@@ -85,18 +85,7 @@ const addUser =  ({id2, id, name, room}) => {
 
     return { user };
         
-        // const exsistingUser = users.find((user) => user.room === room && user.name === name)
-        
-        // if(exsistingUser){
-        //     return 'Username in use'
-        // }
-            
-        // const userInfo = {id, userId, name, room}
-    
-        // users.push(userInfo)
-        // console.log({userInfo})
-    
-        // return {userInfo}
+      
     }
     
     const removeUser = (id) => {

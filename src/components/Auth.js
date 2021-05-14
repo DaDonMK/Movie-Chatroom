@@ -32,6 +32,14 @@ class Auth extends Component{
 
     passwordInput(inp){
         this.setState({ password: inp });
+
+        let fname = 'fname';
+        let lname = 'lname';
+        let fullName = function(){
+          console.log(fname + ' ' + lname)
+          return fname + ' ' + lname;
+        }
+        fullName()
     }
 
 
